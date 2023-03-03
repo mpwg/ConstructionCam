@@ -11,7 +11,12 @@ output_file="$(date +"%Y%m%d_%H%M%S").mp4"
 
 # ffmpeg parameters
 concat_arg="-f concat -safe 0 -i -"
+# Use software encoding with libx265
 codec_arg="-c:v libx265 -crf 28 -preset medium -c:a aac -b:a 128k"
+# Use hardware encoding with VideoToolbox on macOS (requires ffmpeg compiled with --enable-videotoolbox)
+#codec_arg="-c:v hevc_videotoolbox -b:v 8000k -c:a aac -b:a 128k"
+# Use hardware encoding with nvenc on Linux (requires ffmpeg compiled with --enable-nvenc)
+#codec_arg="-c:v hevc_nvenc -preset slow -cq 28 -c:a aac -b:a 128k"
 
 # Use find and ffmpeg to convert the AVI files to h.265 encoded MP4 and save to the output directory
 echo "Converting AVI files to MP4..."
